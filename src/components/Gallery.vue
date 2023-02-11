@@ -56,14 +56,10 @@
               :src="`${newImage.data}`"
               :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
               aspect-ratio="1"
-              width="512"
-              cover
-              class="bg-grey-lighten-2"
-            >
-              <v-card-subtitle class="white--text align-end">{{
-                newImage.prompt
-              }}</v-card-subtitle>
 
+              cover
+              class="bg-grey-lighten-2 ma-3"
+            >
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
                   <v-progress-circular
