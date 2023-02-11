@@ -37,12 +37,20 @@
               <v-btn color="secondary" variant="text" @click="dialog = false">
                 Close
               </v-btn>
-              <v-btn color="primary" variant="flat" @click="generate()">
+              <v-btn color="primary" variant="flat" @click="generate()" :loading="inProgress"  :disabled="inProgress">
                 Generate
+                <template v-slot:loader>
+                  <span class="custom-loader">
+                    <v-icon light>mdi-cached</v-icon>
+                  </span>
+                </template>
               </v-btn>
             </v-card-actions>
 
-            <v-img v-if="inProgress && !newImage" class="ma-3" :src="`https://picsum.photos/10/6`"
+            <v-img
+              v-if="inProgress && !newImage"
+              class="ma-3"
+              :src="`https://picsum.photos/10/6`"
               ><v-row class="fill-height ma-0" align="center" justify="center">
                 <v-progress-circular
                   indeterminate
@@ -56,7 +64,6 @@
               :src="`${newImage.data}`"
               :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
               aspect-ratio="1"
-
               cover
               class="bg-grey-lighten-2 ma-3"
             >
@@ -81,32 +88,79 @@
           cols="4"
         >
           <v-card width="100%">
-            <v-img
-              :src="`${image.data}`"
-              :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
-              aspect-ratio="1"
-              cover
-              class="bg-grey-lighten-2"
-            >
-              <v-card-subtitle class="white--text align-end">{{
-                image.prompt
-              }}</v-card-subtitle>
+            <v-hover>
+              <template v-slot:default="{ isHovering, props }">
+                <v-img
+                  :src="`${image.data}`"
+                  :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+                  aspect-ratio="1"
+                  cover
+                  class="bg-grey-lighten-2"
+                >
+                  <v-card-subtitle v-if="isHovering" class="white--text align-end">{{
+                    image.prompt
+                  }}</v-card-subtitle>
 
-              <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular
-                    indeterminate
-                    color="grey-lighten-5"
-                  ></v-progress-circular>
-                </v-row>
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="grey-lighten-5"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
               </template>
-            </v-img>
+            </v-hover>
           </v-card>
         </v-col>
       </v-row>
     </v-responsive>
   </v-container>
 </template>
+
+<style>
+  .custom-loader {
+    animation: loader 1s infinite;
+    display: flex;
+  }
+  @-moz-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @-o-keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes loader {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>
 
 <script lang="ts">
 export default {
