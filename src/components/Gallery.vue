@@ -4,84 +4,67 @@
       <div class="py-2" />
 
       <v-row justify="end">
-        <v-dialog v-model="dialog" persistent max-width="600px">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn color="deep-purple-accent-3" class="mr-4" dark v-bind="attrs" v-on="on">
+        <v-dialog
+          v-model="dialog"
+          persistent
+          width="1024"
+        >
+          <template v-slot:activator="{ props }">
+            <v-btn
+              color="primary"
+              class="mr-4"
+              v-bind="props"
+            >
               Create
             </v-btn>
           </template>
           <v-card>
             <v-card-title>
-              <span class="text-h5">User Profile</span>
+              <span class="text-h5">Create New</span>
             </v-card-title>
             <v-card-text>
               <v-container>
                 <v-row>
-                  <v-col cols="12" sm="6" md="4">
+                  <v-col
+                    cols="12"
+                    sm="12"
+                    md="12"
+                  >
+                    <p>What do you want to see?</p>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="12"
+                    md="12"
+                  >
                     <v-text-field
-                      label="Legal first name*"
+                      label="Prompt"
+                      v-model="prompt"
+                      hint="Tiny underwater complete world in a large glass bowl, water, sharp, photorealistic, detailed and intricate environment"
                       required
                     ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      label="Legal middle name"
-                      hint="example of helper text only on focus"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      label="Legal last name*"
-                      hint="example of persistent helper text"
-                      persistent-hint
-                      required
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field label="Email*" required></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Password*"
-                      type="password"
-                      required
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6">
-                    <v-select
-                      :items="['0-17', '18-29', '30-54', '54+']"
-                      label="Age*"
-                      required
-                    ></v-select>
-                  </v-col>
-                  <v-col cols="12" sm="6">
-                    <v-autocomplete
-                      :items="[
-                        'Skiing',
-                        'Ice hockey',
-                        'Soccer',
-                        'Basketball',
-                        'Hockey',
-                        'Reading',
-                        'Writing',
-                        'Coding',
-                        'Basejump',
-                      ]"
-                      label="Interests"
-                      multiple
-                    ></v-autocomplete>
                   </v-col>
                 </v-row>
               </v-container>
-              <small>*indicates required field</small>
+              <small>Image generation can take up to a minute</small>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="dialog = false">
+              <v-btn
+                color="blue-darken-1"
+                variant="text"
+                @click="dialog = false"
+              >
                 Close
               </v-btn>
-              <v-btn color="blue darken-1" text @click="dialog = false">
-                Save
+              <v-btn
+                color="blue-darken-1"
+                variant="text"
+                @click="generate()"
+              >
+                Create
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -123,12 +106,20 @@
   </v-container>
 </template>
 
+<script lang="ts">
+  export default {
+    data: () => ({
+      dialog: false,
+    }),
+  }
+</script>
+
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
 
 const API_URL = 'https://meteron.ai'
 
-let dialog = false
+const prompt = ref('')
 
 // Generated images
 const images = ref([])
@@ -149,6 +140,10 @@ watchEffect(async () => {
   // to get the image data
   downloadedImages.value = await Promise.all(images.value.map(imageSource))
 })
+
+function generate() {
+  console.log(prompt.value)
+}
 
 async function imageSource(imageGen) {
   const resp = await (await fetch(imageGen.outputImages[0].url)).json()
