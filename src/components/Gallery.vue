@@ -7,7 +7,7 @@
         <v-dialog
           v-model="dialog"
           persistent
-          width="1024"
+          width="768"
         >
           <template v-slot:activator="{ props }">
             <v-btn
@@ -48,23 +48,23 @@
                   </v-col>
                 </v-row>
               </v-container>
-              <small>Image generation can take up to a minute</small>
+              <small>Image generation can take up to a minute 😅</small>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn
-                color="blue-darken-1"
+                color="secondary"
                 variant="text"
                 @click="dialog = false"
               >
                 Close
               </v-btn>
               <v-btn
-                color="blue-darken-1"
-                variant="text"
+                color="primary"
+                variant="flat"
                 @click="generate()"
               >
-                Create
+                Generate
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -118,6 +118,7 @@
 import { ref, watchEffect } from 'vue'
 
 const API_URL = 'https://meteron.ai'
+const API_ANON_TOKEN = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpX'
 
 const prompt = ref('')
 
@@ -131,7 +132,7 @@ watchEffect(async () => {
   const url = `${API_URL}/v1/images/generations?status=completed`
 
   var headers = new Headers({
-    'Authorization': `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpX`
+    'Authorization': `Bearer ${API_ANON_TOKEN}`
   })
 
   images.value = await (await fetch(url, { headers: headers })).json()
