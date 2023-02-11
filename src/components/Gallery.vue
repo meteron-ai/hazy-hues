@@ -1,10 +1,7 @@
 <template>
   <v-container class="fill-height">
     <v-responsive class="d-flex text-center fill-height">
-
-
       <div class="py-14" />
-
 
       <v-row>
         <v-col
@@ -21,39 +18,7 @@
             class="bg-grey-lighten-2"
           >
             <template v-slot:placeholder>
-              <v-row
-                class="fill-height ma-0"
-                align="center"
-                justify="center"
-              >
-                <v-progress-circular
-                  indeterminate
-                  color="grey-lighten-5"
-                ></v-progress-circular>
-              </v-row>
-            </template>
-          </v-img>
-        </v-col>
-
-        <v-col
-          v-for="n in 9"
-          :key="n"
-          class="d-flex child-flex"
-          cols="4"
-        >
-          <v-img
-            :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
-            :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
-            aspect-ratio="1"
-            cover
-            class="bg-grey-lighten-2"
-          >
-            <template v-slot:placeholder>
-              <v-row
-                class="fill-height ma-0"
-                align="center"
-                justify="center"
-              >
+              <v-row class="fill-height ma-0" align="center" justify="center">
                 <v-progress-circular
                   indeterminate
                   color="grey-lighten-5"
@@ -63,8 +28,6 @@
           </v-img>
         </v-col>
       </v-row>
-
-
     </v-responsive>
   </v-container>
 </template>
@@ -84,10 +47,10 @@ watchEffect(async () => {
   const url = `${API_URL}/v1/images/generations?status=completed`
 
   var headers = new Headers({
-      'Authorization': `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpX`
+    'Authorization': `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpX`
   })
 
-  images.value = await (await fetch(url, {headers: headers})).json()
+  images.value = await (await fetch(url, { headers: headers })).json()
 
   // Iterate over the generated images list and call imageSource
   // to get the image data
