@@ -98,7 +98,7 @@
               <template v-slot:default="{ isHovering, props }">
                 <v-img
                   :src="`${image.data}`"
-                  :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+                  :lazy-src="`https://picsum.photos/10/6`"
                   aspect-ratio="1"
                   cover
                   v-bind="props"
@@ -185,7 +185,7 @@ const API_NEW_GENERATIONS_URL = `${API_URL}/v1/images/generations`
 
 const prompt = ref('')
 const inProgress = ref(false)
-const newImageGen = ref(null)
+const newImageGen = ref({})
 const newImage = ref(null)
 
 // Generated images
@@ -233,7 +233,7 @@ function generate() {
   })
 }
 
-async function imageSource(imageGen) {
+async function imageSource(imageGen: any) {
   const resp = await (await fetch(imageGen.outputImages[0].url)).json()
 
   // Decode base64 prompt
