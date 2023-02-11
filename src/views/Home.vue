@@ -1,7 +1,7 @@
 <template>
-  <HelloWorld />
+  <Gallery />
 </template>
 
 <script lang="ts" setup>
-  import HelloWorld from '@/components/Gallery.vue'
+  import Gallery from '@/components/Gallery.vue'
 </script>

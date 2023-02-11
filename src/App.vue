@@ -3,16 +3,12 @@
     <v-main>
       <div>
         <v-toolbar
-          dark
+          color="black"
           dense
-
         >
           <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
           <v-toolbar-title>The Dream Shop</v-toolbar-title>
-
           <v-spacer></v-spacer>
-
         </v-toolbar>
       </div>
       <Gallery />
