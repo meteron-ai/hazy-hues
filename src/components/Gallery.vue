@@ -6,7 +6,7 @@
       <v-row justify="end">
         <v-dialog v-model="dialog" persistent max-width="600px">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn color="primary" class="mr-4" dark v-bind="attrs" v-on="on">
+            <v-btn color="deep-purple-accent-3" class="mr-4" dark v-bind="attrs" v-on="on">
               Create
             </v-btn>
           </template>
