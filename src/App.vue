@@ -6,7 +6,7 @@
           color="black"
           dense
         >
-          <v-toolbar-title class="ml-8">The Dream Shop</v-toolbar-title>
+          <v-toolbar-title class="ml-8">The Dream Realm</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
       </div>
