@@ -37,7 +37,13 @@
               <v-btn color="secondary" variant="text" @click="dialog = false">
                 Close
               </v-btn>
-              <v-btn color="primary" variant="flat" @click="generate()" :loading="inProgress"  :disabled="inProgress">
+              <v-btn
+                color="primary"
+                variant="flat"
+                @click="generate()"
+                :loading="inProgress"
+                :disabled="inProgress"
+              >
                 Generate
                 <template v-slot:loader>
                   <span class="custom-loader">
@@ -95,11 +101,10 @@
                   :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
                   aspect-ratio="1"
                   cover
-                  class="bg-grey-lighten-2"
+                  v-bind="props"
+                  class="align-end justify-start"
                 >
-                  <v-card-subtitle v-if="isHovering" class="white--text align-end">{{
-                    image.prompt
-                  }}</v-card-subtitle>
+                  <span class="text-subtitle-2 white" v-show="isHovering">{{ image.prompt }}</span>
 
                   <template v-slot:placeholder>
                     <v-row
@@ -124,42 +129,42 @@
 </template>
 
 <style>
-  .custom-loader {
-    animation: loader 1s infinite;
-    display: flex;
+.custom-loader {
+  animation: loader 1s infinite;
+  display: flex;
+}
+@-moz-keyframes loader {
+  from {
+    transform: rotate(0);
   }
-  @-moz-keyframes loader {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+  to {
+    transform: rotate(360deg);
   }
-  @-webkit-keyframes loader {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+}
+@-webkit-keyframes loader {
+  from {
+    transform: rotate(0);
   }
-  @-o-keyframes loader {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+  to {
+    transform: rotate(360deg);
   }
-  @keyframes loader {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+}
+@-o-keyframes loader {
+  from {
+    transform: rotate(0);
   }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 </style>
 
 <script lang="ts">
