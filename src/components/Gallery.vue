@@ -21,12 +21,12 @@
                 </v-row>
                 <v-row>
                   <v-col cols="12" sm="12" md="12">
-                    <v-text-field
+                    <v-textarea
                       label="Prompt"
                       v-model="prompt"
                       hint="Tiny underwater complete world in a large glass bowl, water, sharp, photorealistic, detailed and intricate environment"
                       required
-                    ></v-text-field>
+                    ></v-textarea>
                   </v-col>
                 </v-row>
               </v-container>
