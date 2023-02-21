@@ -178,10 +178,11 @@ export default {
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
 
-const API_URL = 'https://meteron.ai'
-const API_ANON_TOKEN = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpX'
-const API_GENERATIONS_URL = `${API_URL}/v1/images/generations?status=completed`
-const API_NEW_GENERATIONS_URL = `${API_URL}/v1/images/generations`
+const API_URL = 'https://app.meteron.ai'
+const API_CLUSTER = 'lightning'
+const API_ANON_TOKEN = 'pub_2lup2fd2qxtm7omggtojwibvicm'
+const API_GENERATIONS_URL = `${API_URL}/api/images/generations?status=completed`
+const API_NEW_GENERATIONS_URL = `${API_URL}/api/images/generations`
 
 const prompt = ref('')
 const inProgress = ref(false)
@@ -210,7 +211,7 @@ function generate() {
   watchEffect(async () => {
     inProgress.value = true
 
-    const url = API_NEW_GENERATIONS_URL + '?user=user-x&cluster=lightning-cluster'
+    const url = API_NEW_GENERATIONS_URL + `?user=user-x&cluster=${API_CLUSTER}`
     var headers = new Headers({
       'Authorization': `Bearer ${API_ANON_TOKEN}`,
       // 'X-User': 'user-x',
