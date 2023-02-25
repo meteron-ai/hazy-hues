@@ -85,19 +85,27 @@
           </v-card>
         </v-dialog>
       </v-row>
-
+      <!-- {{ images}} -->
       <v-row>
         <v-col
-          v-for="image in downloadedImages"
+          v-for="image in images"
           :key="image.id"
           class="d-flex child-flex"
           cols="4"
         >
-          <v-card width="100%">
+          <v-card width="100%"
+            :id="image.id"
+            v-intersect="{
+              handler: onIntersect,
+              options: {
+                threshold: [0, 0.5, 1.0],
+              }
+            }"
+          >
             <v-hover>
               <template v-slot:default="{ isHovering, props }">
                 <v-img
-                  :src="`${image.data}`"
+                  :src="getImageData(image.id).data"
                   :lazy-src="`https://picsum.photos/10/6`"
                   aspect-ratio="1"
                   cover
@@ -176,7 +184,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
+import { ref, reactive, watchEffect } from 'vue'
 
 const API_URL = 'https://app.meteron.ai'
 const API_CLUSTER = 'lightning'
@@ -195,6 +203,8 @@ const images = ref([])
 // Download images to the browser
 let downloadedImages = ref([])
 
+let downloadInProgress = {}
+
 watchEffect(async () => {
   var headers = new Headers({
     'Authorization': `Bearer ${API_ANON_TOKEN}`
@@ -204,7 +214,7 @@ watchEffect(async () => {
 
   // Iterate over the generated images list and call imageSource
   // to get the image data
-  downloadedImages.value = await Promise.all(images.value.map(imageSource))
+  // downloadedImages.value = await Promise.all(images.value.map(imageSource))
 })
 
 function generate() {
@@ -232,6 +242,46 @@ function generate() {
     // Shutdown the progress bar
     inProgress.value = false
   })
+}
+
+async function onIntersect (isIntersecting, entries, observer) {
+  watchEffect(async () => {
+    if (isIntersecting) {
+      console.log("intersecting")
+
+      const id = entries[0].target.id
+
+      // Prevent duplicate downloads
+      if (downloadInProgress[id]) {
+        return
+      }
+      downloadInProgress[id] = true
+
+      // Find the image by ID from images list
+      const image = images.value.find(image => image.id === id)
+
+      const downloadedImage = await imageSource(image)
+
+      downloadedImages.value.push({
+        id: downloadedImage.id,
+        data: downloadedImage.data,
+        prompt: downloadedImage.prompt
+      })
+    }
+  })
+}
+
+function getImageData(id: string) {
+  const image = downloadedImages.value.find(image => image.id === id)
+  if (image) {
+    return image
+  } else {
+    return {
+      id: '',
+      data: '',
+      prompt: ''
+    }
+  }
 }
 
 async function imageSource(imageGen: any) {
