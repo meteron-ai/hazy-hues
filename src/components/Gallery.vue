@@ -112,7 +112,7 @@
                   v-bind="props"
                   class="align-end justify-start"
                 >
-                  <span class="text-subtitle-2 white" v-show="isHovering">{{ image.prompt }}</span>
+                  <span class="text-subtitle-2 white" v-show="isHovering">{{ getImageData(image.id).prompt }}</span>
 
                   <template v-slot:placeholder>
                     <v-row
