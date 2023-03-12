@@ -6,7 +6,16 @@
           color="black"
           dense
         >
-          <v-toolbar-title class="ml-8">The Dream Realm</v-toolbar-title>
+          <span class="text-h6 ml-4 mr-1">
+            Hazy Hues
+          </span>
+          <a href="https://meteron.ai" target="_blank" rel="noopener">
+            <span class="font-italic subtitle-1 text--grey">
+                by Meteron AI
+            </span>
+            <v-img></v-img>
+          </a>
+
           <v-spacer></v-spacer>
         </v-toolbar>
       </div>

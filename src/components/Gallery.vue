@@ -244,10 +244,9 @@ function generate() {
   })
 }
 
-async function onIntersect (isIntersecting, entries, observer) {
+async function onIntersect (isIntersecting: boolean, entries: Array<any>) {
   watchEffect(async () => {
     if (isIntersecting) {
-      console.log("intersecting")
 
       const id = entries[0].target.id
 
