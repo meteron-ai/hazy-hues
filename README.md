@@ -1,4 +1,10 @@
-# default
+# Hazy Hues
+
+This projects demonstrates how to use Meteron AI to generate and serve images using Stable Diffusion.
+
+Main features:
+- Image generation
+- Lazy loading images using IntersectionObserver from presigned URLs.
 
 ## Project setup
 
@@ -8,9 +14,6 @@ yarn
 
 # npm
 npm install
-
-# pnpm
-pnpm install
 ```
 
 ### Compiles and hot-reloads for development
@@ -21,24 +24,4 @@ yarn dev
 
 # npm
 npm run dev
-
-# pnpm
-pnpm dev
 ```
-
-### Compiles and minifies for production
-
-```
-# yarn
-yarn build
-
-# npm
-npm run build
-
-# pnpm
-pnpm build
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://vitejs.dev/config/).
