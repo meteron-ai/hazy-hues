@@ -187,9 +187,9 @@ export default {
 import { ref, reactive, watchEffect } from 'vue'
 
 const API_URL = 'https://app.meteron.ai'
-const API_CLUSTER = 'lightning'
+const API_CLUSTER = 'stable-diffusion'
 const API_ANON_TOKEN = 'pub_2lup2fd2qxtm7omggtojwibvicm'
-const API_GENERATIONS_URL = `${API_URL}/api/images/generations?status=completed`
+const API_GENERATIONS_URL = `${API_URL}/api/images/generations?status=completed&pageSize=200`
 const API_NEW_GENERATIONS_URL = `${API_URL}/api/images/generations`
 
 const prompt = ref('')
@@ -210,8 +210,9 @@ watchEffect(async () => {
     'Authorization': `Bearer ${API_ANON_TOKEN}`
   })
 
-  images.value = await (await fetch(API_GENERATIONS_URL, { headers: headers })).json()
+  let data = await (await fetch(API_GENERATIONS_URL, { headers: headers })).json()
 
+  images.value = data.results
   // Iterate over the generated images list and call imageSource
   // to get the image data
   // downloadedImages.value = await Promise.all(images.value.map(imageSource))
