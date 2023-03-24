@@ -25,3 +25,10 @@ yarn dev
 # npm
 npm run dev
 ```
+
+
+### Example prompts
+
+```
+Incredible picture of a woman, dramatic lighting, detailed digital art trending on artstation , fantasy, golden ratio, matte painting movie poster, trending, intricate, artgem, highly detailed, vibrant, production cinematic character render, ultra high quality model, nature in the background, hands hidden
+```
