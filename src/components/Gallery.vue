@@ -189,7 +189,7 @@ import { ref, reactive, watchEffect } from 'vue'
 const API_URL = 'https://app.meteron.ai'
 const API_CLUSTER = 'stable-diffusion'
 const API_ANON_TOKEN = 'pub_2lup2fd2qxtm7omggtojwibvicm'
-const API_GENERATIONS_URL = `${API_URL}/api/images/generations?status=completed&pageSize=200`
+const API_GENERATIONS_URL = `${API_URL}/api/images/generations?status=completed&cluster=${API_CLUSTER}&pageSize=200`
 const API_NEW_GENERATIONS_URL = `${API_URL}/api/images/generations`
 
 const prompt = ref('')
