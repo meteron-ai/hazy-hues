@@ -192,7 +192,7 @@ const API_CLUSTER = 'stable-diffusion'
 
 // For using the API anonymously, you can use the anonymous token.
 // You can get yours from https://app.meteron.ai/?tab=API%20Keys page.
-const API_ANON_TOKEN = 'pub_2lup2fd2qxtm7omggtojwibvicm'
+const API_ANON_TOKEN = 'pub_01gwg0a4wp7qgbxajnt75n056t'
 
 const API_GET_GENERATIONS_URL = `https://app.meteron.ai/api/images/generations?status=completed&cluster=${API_CLUSTER}&pageSize=200`
 const API_GENERATE_URL = `https://app.meteron.ai/api/images/generations?cluster=${API_CLUSTER}`
