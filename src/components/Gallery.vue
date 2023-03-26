@@ -184,13 +184,18 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, reactive, watchEffect } from 'vue'
+import { ref, watchEffect } from 'vue'
 
-const API_URL = 'https://app.meteron.ai'
+// A cluster consists of one or more servers that run the model. Create
+// a new cluster here https://app.meteron.ai/?tab=Settings.
 const API_CLUSTER = 'stable-diffusion'
+
+// For using the API anonymously, you can use the anonymous token.
+// You can get yours from https://app.meteron.ai/?tab=API%20Keys page.
 const API_ANON_TOKEN = 'pub_2lup2fd2qxtm7omggtojwibvicm'
-const API_GENERATIONS_URL = `${API_URL}/api/images/generations?status=completed&cluster=${API_CLUSTER}&pageSize=200`
-const API_NEW_GENERATIONS_URL = `${API_URL}/api/images/generations`
+
+const API_GET_GENERATIONS_URL = `https://app.meteron.ai/api/images/generations?status=completed&cluster=${API_CLUSTER}&pageSize=200`
+const API_GENERATE_URL = `https://app.meteron.ai/api/images/generations?cluster=${API_CLUSTER}`
 
 const prompt = ref('')
 const inProgress = ref(false)
@@ -210,19 +215,15 @@ watchEffect(async () => {
     'Authorization': `Bearer ${API_ANON_TOKEN}`
   })
 
-  let data = await (await fetch(API_GENERATIONS_URL, { headers: headers })).json()
+  let data = await (await fetch(API_GET_GENERATIONS_URL, { headers: headers })).json()
 
   images.value = data.results
-  // Iterate over the generated images list and call imageSource
-  // to get the image data
-  // downloadedImages.value = await Promise.all(images.value.map(imageSource))
 })
 
 function generate() {
   watchEffect(async () => {
     inProgress.value = true
 
-    const url = API_NEW_GENERATIONS_URL + `?user=user-x&cluster=${API_CLUSTER}`
     var headers = new Headers({
       'Authorization': `Bearer ${API_ANON_TOKEN}`,
       // 'X-User': 'user-x',
@@ -235,7 +236,7 @@ function generate() {
       'high_quality': 'true'
     }
 
-    newImageGen.value = await (await fetch(url, { headers: headers, method: 'POST', body: JSON.stringify(data) })).json()
+    newImageGen.value = await (await fetch(API_GENERATE_URL, { headers: headers, method: 'POST', body: JSON.stringify(data) })).json()
 
     // Download the data
     newImage.value = await imageSource(newImageGen.value)
