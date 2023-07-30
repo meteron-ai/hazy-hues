@@ -188,14 +188,14 @@ import { ref, watchEffect } from 'vue'
 
 // A cluster consists of one or more servers that run the model. Create
 // a new cluster here https://app.meteron.ai/?tab=Settings.
-const API_CLUSTER = 'stable-diffusion'
+const API_MODEL = 'sdxl'
 
 // For using the API anonymously, you can use the anonymous token.
 // You can get yours from https://app.meteron.ai/?tab=API%20Keys page.
-const API_ANON_TOKEN = 'pub_2lup2fd2qxtm7omggtojwibvicm'
+const API_ANON_TOKEN = 'pub_01gwg0a4wp7qgbxajnt75n056t'
 
-const API_GET_GENERATIONS_URL = `https://app.meteron.ai/api/images/generations?status=completed&cluster=${API_CLUSTER}&pageSize=200`
-const API_GENERATE_URL = `https://app.meteron.ai/api/images/generations?cluster=${API_CLUSTER}`
+const API_GET_GENERATIONS_URL = `https://app.meteron.ai/api/images/generations?status=completed&model=${API_MODEL}&pageSize=200`
+const API_GENERATE_URL = `https://app.meteron.ai/api/images/generations?model=${API_MODEL}`
 
 const prompt = ref('')
 const inProgress = ref(false)
@@ -230,8 +230,9 @@ function generate() {
     })
 
     const data = {
-      'prompt': prompt.value,
-      'high_quality': 'true'
+      'input': {
+        'prompt': prompt.value
+      }
     }
 
     newImageGen.value = await (await fetch(API_GENERATE_URL, { headers: headers, method: 'POST', body: JSON.stringify(data) })).json()
@@ -291,7 +292,7 @@ async function imageSource(imageGen: any) {
 
   return {
     id: imageGen.id,
-    data: resp.image,
+    data: resp.output[0],
     prompt: request.prompt // Base64 decoded prompt
   }
 }
