@@ -226,8 +226,6 @@ function generate() {
 
     var headers = new Headers({
       'Authorization': `Bearer ${API_ANON_TOKEN}`,
-      // 'X-User': 'user-x',
-      // 'X-Cluster': 'lightning-cluster',
       'Content-Type': 'application/json'
     })
 
