@@ -1,6 +1,6 @@
 # Hazy Hues
 
-This projects demonstrates how to use Meteron AI to generate and serve images using Stable Diffusion.
+This projects demonstrates how to use Meteron AI to generate and serve images using Stable Diffusion XL running on Lightning AI platform.
 
 Main features:
 - Image generation
