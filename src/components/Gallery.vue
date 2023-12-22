@@ -6,7 +6,7 @@
       <v-row justify="end">
         <v-dialog v-model="dialog" persistent width="768">
           <template v-slot:activator="{ props }">
-            <v-btn color="primary" class="mr-4" v-bind="props"> Create </v-btn>
+            <v-btn color="primary" class="mr-4" v-bind="props">Dream</v-btn>
           </template>
           <v-card>
             <v-card-title class="mt-3">
@@ -197,7 +197,7 @@ const API_ANON_TOKEN = 'pub_01gwg0a4wp7qgbxajnt75n056t'
 const ANON_USER_ID = 'anon'
 
 const API_GET_GENERATIONS_URL = `https://app.meteron.ai/api/images/generations?status=completed&model=${API_MODEL}&user=${ANON_USER_ID}&pageSize=200`
-const API_GENERATE_URL = `https://app.meteron.ai/api/images/generations`
+const API_GENERATE_URL = `https://app.meteron.ai/api/images/generations?model=${API_MODEL}&user=${ANON_USER_ID}`
 
 const prompt = ref('')
 const inProgress = ref(false)
@@ -228,9 +228,7 @@ function generate() {
 
     var headers = new Headers({
       'Authorization': `Bearer ${API_ANON_TOKEN}`,
-      'Content-Type': 'application/json',
-      'X-User': ANON_USER_ID,
-      'X-Model': API_MODEL
+      'Content-Type': 'application/json'
     })
 
     const data = {
@@ -289,15 +287,12 @@ function getImageData(id: string) {
 }
 
 async function imageSource(imageGen: any) {
-  const resp = await (await fetch(imageGen.outputImages[0].url)).json()
-
-  // Decode base64 prompt
-  const request = JSON.parse(atob(imageGen.requestBody))
+  const resp = await (await fetch(imageGen.outputs[0].url)).json()
 
   return {
     id: imageGen.id,
     data: resp.output[0],
-    prompt: request.prompt // Base64 decoded prompt
+    prompt: resp.prompt
   }
 }
 
