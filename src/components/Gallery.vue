@@ -188,14 +188,16 @@ import { ref, watchEffect } from 'vue'
 
 // A cluster consists of one or more servers that run the model. Create
 // a new cluster here https://app.meteron.ai/?tab=Settings.
-const API_MODEL = 'sdxl'
+const API_MODEL = 'lightning-sdxl'
 
 // For using the API anonymously, you can use the anonymous token.
 // You can get yours from https://app.meteron.ai/?tab=API%20Keys page.
 const API_ANON_TOKEN = 'pub_01gwg0a4wp7qgbxajnt75n056t'
 
-const API_GET_GENERATIONS_URL = `https://app.meteron.ai/api/images/generations?status=completed&model=${API_MODEL}&pageSize=200`
-const API_GENERATE_URL = `https://app.meteron.ai/api/images/generations?model=${API_MODEL}`
+const ANON_USER_ID = 'anon'
+
+const API_GET_GENERATIONS_URL = `https://app.meteron.ai/api/images/generations?status=completed&model=${API_MODEL}&user=${ANON_USER_ID}&pageSize=200`
+const API_GENERATE_URL = `https://app.meteron.ai/api/images/generations`
 
 const prompt = ref('')
 const inProgress = ref(false)
@@ -226,7 +228,9 @@ function generate() {
 
     var headers = new Headers({
       'Authorization': `Bearer ${API_ANON_TOKEN}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'X-User': ANON_USER_ID,
+      'X-Model': API_MODEL
     })
 
     const data = {
